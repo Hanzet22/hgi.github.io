@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berita · BintangAPI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:#f6f8fc; color:#0b1a33; min-height:100vh; display:flex; flex-direction:column; }
+    .container { max-width:1200px; margin:0 auto; padding:0 20px; width:100%; }
+    header { background:#0b1a33; padding:20px 0; color:#fff; border-bottom:4px solid #fbbf24; }
+    header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+    .logo h1 { font-size:24px; font-weight:800; }
+    .logo h1 span { color:#fbbf24; }
+    .badge { background:rgba(251,191,36,0.2); border:1px solid rgba(251,191,36,0.4); padding:4px 16px; border-radius:40px; font-size:13px; color:#fbbf24; }
+    nav { background:#fff; padding:12px 0; border-bottom:1px solid #e9edf4; }
+    nav .container { display:flex; flex-wrap:wrap; gap:6px 10px; }
+    nav a { padding:6px 16px; border-radius:40px; font-size:13px; font-weight:600; background:#f1f4f9; color:#2c3e5a; transition:0.2s; border:1px solid transparent; white-space:nowrap; }
+    nav a:hover { background:#e2e8f0; border-color:#cbd5e1; }
+    nav a.active { background:#0b1a33; color:#fff; border-color:#0b1a33; }
+    nav a.home { background:#fbbf24; color:#0b1a33; border-color:#fbbf24; }
+    main { flex:1; padding:30px 0; }
+    .endpoint { background:#fff; border-radius:16px; padding:20px 24px; margin-bottom:20px; border:1px solid #e9edf4; }
+    .endpoint h3 { font-size:18px; font-weight:700; }
+    .endpoint .url { font-size:13px; color:#6b7d98; background:#f1f4f9; padding:4px 12px; border-radius:20px; display:inline-block; margin:6px 0 12px; font-family:monospace; }
+    .endpoint .row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:12px 0; }
+    .endpoint button { background:#0b1a33; color:#fff; border:none; padding:10px 24px; border-radius:10px; font-weight:600; cursor:pointer; }
+    .endpoint button:hover { background:#1a2f4f; }
+    .endpoint .result { background:#f8faff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; margin-top:12px; white-space:pre-wrap; font-size:14px; max-height:300px; overflow:auto; }
+    footer { background:#0b1a33; color:#8ba0bb; padding:16px 0; text-align:center; font-size:14px; margin-top:auto; border-top:3px solid #fbbf24; }
+    footer a { color:#fbbf24; font-weight:600; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media (max-width:640px) { .grid-2 { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo"><h1>✦ Bintang<span>API</span></h1></div>
+      <div class="badge">📰 Berita · 9 endpoint</div>
+    </div>
+  </header>
+  <nav>
+    <div class="container">
+      <a href="index.html" class="home">🏠 Home</a>
+      <a href="ai.html">AI Chat</a>
+      <a href="ai-image.html">AI Image</a>
+      <a href="ai-tools.html">AI Tools</a>
+      <a href="baca.html">Baca</a>
+      <a href="downloader.html">Downloader</a>
+      <a href="berita.html" class="active">Berita</a>
+      <a href="brat-maker.html">Brat Maker</a>
+      <a href="nonton.html">Nonton</a>
+      <a href="scriptblox.html">Scriptblox</a>
+      <a href="search.html">Search</a>
+      <a href="stalker.html">Stalker</a>
+      <a href="tools.html">Tools</a>
+      <a href="uploader.html">Uploader</a>
+    </div>
+  </nav>
+  <main>
+    <div class="container">
+      <h2 style="font-size:22px; font-weight:700; margin-bottom:20px;">📰 Berita dari berbagai sumber</h2>
+      <div class="grid-2">
+        <!-- 26. Antara -->
+        <div class="endpoint">
+          <h3>26. AntaraNews</h3>
+          <div class="url">GET /api/info/berita/antara</div>
+          <button onclick="fetchBerita('antara','ant_result')">Fetch</button>
+          <div id="ant_result" class="result">Klik Fetch</div>
+        </div>
+        <!-- 27. CNBC -->
+        <div class="endpoint">
+          <h3>27. CNBCIndonesia</h3>
+          <div class="url">GET /api/info/berita/cnbc</div>
+          <button onclick="fetchBerita('cnbc','cnbc_result')">Fetch</button>
+          <div id="cnbc_result" class="result">Klik Fetch</div>
+        </div>
+        <!-- 28. CNN -->
+        <div class="endpoint">
+          <h3>28. CNN</h3>
+          <div class="url">GET /api/info/berita/cnn</div>
+          <button onclick="fetchBerita('cnn','cnn_result')">Fetch</button>
+          <div id="cnn_result" class="result">Klik Fetch</div>
+        </div>
+        <!-- 29. GoogleNews -->
+        <div class="endpoint">
+          <h3>29. GoogleNews</h3>
+          <div class="url">GET /api/info/berita/google</div>
+          <button onclick="fetchBerita('google','goog_result')">Fetch</button>
+          <div id="goog_result" class="result">Klik Fetch</div>
+        </div>
+        <!-- 30. KompasTV -->
+        <div class="endpoint">
+          <h3>30. KompasTV</h3>
+          <div class="url">GET /api/info/berita/kompas</div>
+          <button onclick="fetchBerita('kompas','komp_result')">Fetch</button>
+          <div id="komp_result" class="result">Klik Fetch</div>
+        </div>
+        <!-- 31. Liputan6 -->
+        <div class="endpoint">
+          <h3>31. Liputan6</h3>
+          <div class="url">GET /api/info/berita/liputan6</div>
+          <button onclick="fetchBerita('liputan6','lip6_result')">Fetch</button>
+          <div id="lip6_result" class="result">Klik Fetch</div>
+        </div>
+        <!-- 32. SindoNews -->
+        <div class="endpoint">
+          <h3>32. SindoNews</h3>
+          <div class="url">GET /api/info/berita/sindo</div>
+          <button onclick="fetchBerita('sindo','sindo_result')">Fetch</button>
+          <div id="sindo_result" class="result">Klik Fetch</div>
+        </div>
+        <!-- 25. Grow A Garden Stock (bonus) -->
+        <div class="endpoint">
+          <h3>25. Grow A Garden Stock</h3>
+          <div class="url">GET /api/info/gagstock</div>
+          <button onclick="fetchBerita('gagstock','gag_result')">Fetch</button>
+          <div id="gag_result" class="result">Klik Fetch</div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">BintangAPI · <a href="https://bintangapi.my.id" target="_blank">bintangapi.my.id</a></div>
+  </footer>
+  <script>
+    async function doFetch(url, targetId) {
+      const el = document.getElementById(targetId);
+      el.textContent = '⏳ Loading...';
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        el.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        el.textContent = '❌ Error: ' + e.message;
+      }
+    }
+    function fetchBerita(source, targetId) {
+      const map = {
+        'antara':'https://bintangapi.my.id/api/info/berita/antara',
+        'cnbc':'https://bintangapi.my.id/api/info/berita/cnbc',
+        'cnn':'https://bintangapi.my.id/api/info/berita/cnn',
+        'google':'https://bintangapi.my.id/api/info/berita/google',
+        'kompas':'https://bintangapi.my.id/api/info/berita/kompas',
+        'liputan6':'https://bintangapi.my.id/api/info/berita/liputan6',
+        'sindo':'https://bintangapi.my.id/api/info/berita/sindo',
+        'gagstock':'https://bintangapi.my.id/api/info/gagstock'
+      };
+      doFetch(map[source], targetId);
+    }
+  </script>
+</body>
+</html>
