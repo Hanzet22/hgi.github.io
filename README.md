@@ -60,7 +60,7 @@ Dashboard ini dibangun secara modular menggunakan skema penamaan file statis yan
 
 ```text
 hanzet22.github.io/
-└── hypergaruda.github.io/
+└── hypergaruda-API
     ├── index.html          # Halaman Utama / Portal Dashboard
     ├── ai.html             # Endpoint Modul AI Chat
     ├── ai-image.html       # Endpoint Modul AI Image
