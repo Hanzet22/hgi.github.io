@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chat · BintangAPI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:#f6f8fc; color:#0b1a33; min-height:100vh; display:flex; flex-direction:column; }
+    .container { max-width:1200px; margin:0 auto; padding:0 20px; width:100%; }
+    header { background:#0b1a33; padding:20px 0; color:#fff; border-bottom:4px solid #fbbf24; }
+    header .container { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+    .logo h1 { font-size:24px; font-weight:800; }
+    .logo h1 span { color:#fbbf24; }
+    .badge { background:rgba(251,191,36,0.2); border:1px solid rgba(251,191,36,0.4); padding:4px 16px; border-radius:40px; font-size:13px; color:#fbbf24; }
+    nav { background:#fff; padding:12px 0; border-bottom:1px solid #e9edf4; }
+    nav .container { display:flex; flex-wrap:wrap; gap:6px 10px; }
+    nav a { padding:6px 16px; border-radius:40px; font-size:13px; font-weight:600; background:#f1f4f9; color:#2c3e5a; transition:0.2s; border:1px solid transparent; white-space:nowrap; }
+    nav a:hover { background:#e2e8f0; border-color:#cbd5e1; }
+    nav a.active { background:#0b1a33; color:#fff; border-color:#0b1a33; }
+    nav a.home { background:#fbbf24; color:#0b1a33; border-color:#fbbf24; }
+    main { flex:1; padding:30px 0; }
+    .endpoint { background:#fff; border-radius:16px; padding:20px 24px; margin-bottom:20px; border:1px solid #e9edf4; box-shadow:0 2px 6px rgba(0,0,0,0.02); }
+    .endpoint h3 { font-size:18px; font-weight:700; margin-bottom:4px; }
+    .endpoint .url { font-size:13px; color:#6b7d98; background:#f1f4f9; padding:4px 12px; border-radius:20px; display:inline-block; margin-bottom:12px; font-family:monospace; }
+    .endpoint .row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:12px 0; }
+    .endpoint input, .endpoint select { padding:10px 14px; border:1px solid #d1d9e8; border-radius:10px; font-size:14px; flex:1 1 200px; background:#fff; }
+    .endpoint button { background:#0b1a33; color:#fff; border:none; padding:10px 24px; border-radius:10px; font-weight:600; cursor:pointer; transition:0.2s; }
+    .endpoint button:hover { background:#1a2f4f; }
+    .endpoint .result { background:#f8faff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; margin-top:12px; white-space:pre-wrap; font-size:14px; max-height:300px; overflow:auto; }
+    footer { background:#0b1a33; color:#8ba0bb; padding:16px 0; text-align:center; font-size:14px; margin-top:auto; border-top:3px solid #fbbf24; }
+    footer a { color:#fbbf24; font-weight:600; }
+    @media (max-width:640px) { .endpoint .row { flex-direction:column; align-items:stretch; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo"><h1>✦ Bintang<span>API</span></h1></div>
+      <div class="badge">🧠 AI Chat · 9 endpoint</div>
+    </div>
+  </header>
+  <nav>
+    <div class="container">
+      <a href="index.html" class="home">🏠 Home</a>
+      <a href="ai.html" class="active">AI Chat</a>
+      <a href="ai-image.html">AI Image</a>
+      <a href="ai-tools.html">AI Tools</a>
+      <a href="baca.html">Baca</a>
+      <a href="downloader.html">Downloader</a>
+      <a href="berita.html">Berita</a>
+      <a href="brat-maker.html">Brat Maker</a>
+      <a href="nonton.html">Nonton</a>
+      <a href="scriptblox.html">Scriptblox</a>
+      <a href="search.html">Search</a>
+      <a href="stalker.html">Stalker</a>
+      <a href="tools.html">Tools</a>
+      <a href="uploader.html">Uploader</a>
+    </div>
+  </nav>
+  <main>
+    <div class="container">
+      <h2 style="font-size:22px; font-weight:700; margin-bottom:20px;">🤖 AI Chat Endpoint</h2>
+
+      <!-- 1. AI Prompt -->
+      <div class="endpoint">
+        <h3>1. AI Prompt</h3>
+        <div class="url">GET /api/aichat/aiprompt?prompt=...&text=...</div>
+        <div class="row">
+          <input type="text" id="ap_prompt" value="kamu adalah bintangai" placeholder="prompt">
+          <input type="text" id="ap_text" value="halo kamu siapa" placeholder="text">
+          <button onclick="fetchPrompt()">Fetch</button>
+        </div>
+        <div id="ap_result" class="result">Klik Fetch untuk melihat respons</div>
+      </div>
+
+      <!-- 2. AI Research -->
+      <div class="endpoint">
+        <h3>2. AI Research</h3>
+        <div class="url">GET /api/aichat/research?q=...</div>
+        <div class="row">
+          <input type="text" id="ar_q" value="bintang" placeholder="q">
+          <button onclick="fetchResearch()">Fetch</button>
+        </div>
+        <div id="ar_result" class="result">Klik Fetch</div>
+      </div>
+
+      <!-- 3. CoPilot -->
+      <div class="endpoint">
+        <h3>3. CoPilot</h3>
+        <div class="url">GET /api/aichat/copilot?text=...</div>
+        <div class="row">
+          <input type="text" id="cp_text" value="haloo" placeholder="text">
+          <button onclick="fetchCopilot()">Fetch</button>
+        </div>
+        <div id="cp_result" class="result">Klik Fetch</div>
+      </div>
+
+      <!-- 4. DeepSeek V3 -->
+      <div class="endpoint">
+        <h3>4. DeepSeek V3</h3>
+        <div class="url">GET /api/aichat/deep-v3?text=...</div>
+        <div class="row">
+          <input type="text" id="ds3_text" value="halo apa kabar" placeholder="text">
+          <button onclick="fetchDeepV3()">Fetch</button>
+        </div>
+        <div id="ds3_result" class="result">Klik Fetch</div>
+      </div>
+
+      <!-- 5. DeepSeek V4 Flash -->
+      <div class="endpoint">
+        <h3>5. DeepSeek V4 Flash</h3>
+        <div class="url">GET /api/aichat/deep-v4?text=...</div>
+        <div class="row">
+          <input type="text" id="ds4_text" value="halo apa kabar" placeholder="text">
+          <button onclick="fetchDeepV4()">Fetch</button>
+        </div>
+        <div id="ds4_result" class="result">Klik Fetch</div>
+      </div>
+
+      <!-- 6. GITA AI -->
+      <div class="endpoint">
+        <h3>6. GITA AI</h3>
+        <div class="url">GET /api/aichat/gita?text=...</div>
+        <div class="row">
+          <input type="text" id="gita_text" value="halo" placeholder="text">
+          <button onclick="fetchGita()">Fetch</button>
+        </div>
+        <div id="gita_result" class="result">Klik Fetch</div>
+      </div>
+
+      <!-- 7. Llama Scout 4 -->
+      <div class="endpoint">
+        <h3>7. Llama Scout 4</h3>
+        <div class="url">GET /api/aichat/llama-4?text=...</div>
+        <div class="row">
+          <input type="text" id="llama_text" value="halo apa kabar" placeholder="text">
+          <button onclick="fetchLlama()">Fetch</button>
+        </div>
+        <div id="llama_result" class="result">Klik Fetch</div>
+      </div>
+
+      <!-- 8. Qwen3 Coder -->
+      <div class="endpoint">
+        <h3>8. Qwen3 Coder</h3>
+        <div class="url">GET /api/aichat/qwen-coder?text=...</div>
+        <div class="row">
+          <input type="text" id="qwen_text" value="haloo" placeholder="text">
+          <button onclick="fetchQwen()">Fetch</button>
+        </div>
+        <div id="qwen_result" class="result">Klik Fetch</div>
+      </div>
+
+      <!-- 9. UhhhhhGPT (WormGPT) -->
+      <div class="endpoint">
+        <h3>9. UhhhhhGPT (WormGPT)</h3>
+        <div class="url">GET /api/aichat/wormgpt?q=...</div>
+        <div class="row">
+          <input type="text" id="worm_q" value="woi" placeholder="q">
+          <button onclick="fetchWorm()">Fetch</button>
+        </div>
+        <div id="worm_result" class="result">Klik Fetch</div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">BintangAPI · <a href="https://bintangapi.my.id" target="_blank">bintangapi.my.id</a></div>
+  </footer>
+  <script>
+    async function doFetch(url, targetId) {
+      const el = document.getElementById(targetId);
+      el.textContent = '⏳ Loading...';
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        el.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        el.textContent = '❌ Error: ' + e.message;
+      }
+    }
+    function fetchPrompt() {
+      const p = document.getElementById('ap_prompt').value.trim();
+      const t = document.getElementById('ap_text').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/aiprompt?prompt=${encodeURIComponent(p)}&text=${encodeURIComponent(t)}`, 'ap_result');
+    }
+    function fetchResearch() {
+      const q = document.getElementById('ar_q').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/research?q=${encodeURIComponent(q)}`, 'ar_result');
+    }
+    function fetchCopilot() {
+      const t = document.getElementById('cp_text').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/copilot?text=${encodeURIComponent(t)}`, 'cp_result');
+    }
+    function fetchDeepV3() {
+      const t = document.getElementById('ds3_text').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/deep-v3?text=${encodeURIComponent(t)}`, 'ds3_result');
+    }
+    function fetchDeepV4() {
+      const t = document.getElementById('ds4_text').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/deep-v4?text=${encodeURIComponent(t)}`, 'ds4_result');
+    }
+    function fetchGita() {
+      const t = document.getElementById('gita_text').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/gita?text=${encodeURIComponent(t)}`, 'gita_result');
+    }
+    function fetchLlama() {
+      const t = document.getElementById('llama_text').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/llama-4?text=${encodeURIComponent(t)}`, 'llama_result');
+    }
+    function fetchQwen() {
+      const t = document.getElementById('qwen_text').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/qwen-coder?text=${encodeURIComponent(t)}`, 'qwen_result');
+    }
+    function fetchWorm() {
+      const q = document.getElementById('worm_q').value.trim();
+      doFetch(`https://bintangapi.my.id/api/aichat/wormgpt?q=${encodeURIComponent(q)}`, 'worm_result');
+    }
+  </script>
+</body>
+  </html>
